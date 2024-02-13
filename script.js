@@ -1,50 +1,50 @@
 let choices = ["rock", "paper", "scissors"]
-function getComputerChoice(){
-let choice = choices[Math.floor(Math.random() * choices.length)]
-return choice
-}
-function getPlayerChoice(){
-    let validatedInput = false;
-    while (validatedInput == false){
-        const inputChoice = prompt("rock paper scissors");
-            if(inputChoice == null){
-                continue;
-        }
-        const choiceInLower = inputChoice.toLowerCase()
-        if(choices.includes(choiceInLower)){
-            validatedInput = true;
-            return choiceInLower
-    }
-}
-}
-function playGame(playerChoice, computerChoice){
-    if(playerChoice == computerChoice){
-        return "Tie"
-    }
-    else if((playerChoice == "rock" && computerChoice == "paper") ||
-    (playerChoice == "scissors" && computerChoice == "rock") ||
-    (playerChoice == "paper" && computerChoice == "scissors"))
-    {
-        return "Computer"
-    }
-    else {return "Player"}
-}
-function displayResult(playerChoice, computerChoice){
-    const result = playGame(playerChoice, computerChoice)
-    if(result === "Tie"){
-        return `It's a tie!`
-    }
-    else if(result === "Player"){
-        return `Player wins! ${playerChoice} beats ${computerChoice}`
+const playerDisplay = document.getElementById("playerDisplay")
+const computerDisplay = document.getElementById("computerDisplay")
+const resultDisplay = document.getElementById("resultDisplay")
+const computerScoreDisplay = document.getElementById("computerScoreDisplay")
+const playerScoreDisplay = document.getElementById("playerScoreDisplay")
+let playerScore = 0;
+let computerScore = 0;
+
+function playGame(playerChoice){
+    const computerChoice = choices[Math.floor(Math.random()*3)];
+    let result = "";
+
+    if(playerChoice === computerChoice){
+        result = "It's a Tie"
     }
     else{
-        return `Computer wins! ${computerChoice} beats ${playerChoice}`
+        switch(playerChoice){
+            case "rock":
+                result = (computerChoice === "scissors") ? "You win!" 
+                : "You Lose";
+            break;
+            case "paper":
+                result = (computerChoice === "rock") ? "You win!" 
+                : "You Lose";
+                break;
+            case "scissors":
+                result = (computerChoice === "paper") ? "You win!" 
+                : "You Lose";
+                break;
+        }
+    }
+    playerDisplay.textContent = `PLAYER: ${playerChoice}` ; 
+    computerDisplay.textContent = `Computer: ${computerChoice}`;
+    resultDisplay.textContent = result;
+    
+    resultDisplay.classList.remove("greenText", "redText")
+    switch(result){
+        case "You win!":
+            resultDisplay.classList.add("greenText");
+            playerScore++;
+            playerScoreDisplay.textContent = playerScore
+            break;
+        case "You Lose":
+            resultDisplay.classList.add("redText");
+            computerScore++;
+            computerScoreDisplay.textContent = computerScore
+            break;
     }
 }
-
-function startGame(){
-    for(let i = 0 ; i < 5; i++){
-const computerChoice = getComputerChoice()
-const playerChoice = getPlayerChoice()
-console.log(displayResult(computerChoice,playerChoice))}}
-startGame()
