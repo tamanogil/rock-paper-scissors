@@ -30,7 +30,7 @@ function playGame(playerChoice){
                 break;
         }
     }
-    playerDisplay.textContent = `PLAYER: ${playerChoice}` ; 
+    playerDisplay.textContent = `You: ${playerChoice}` ; 
     computerDisplay.textContent = `Computer: ${computerChoice}`;
     resultDisplay.textContent = result;
     
